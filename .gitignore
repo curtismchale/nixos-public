@@ -1,0 +1,21 @@
+# Build results
+result
+result-*
+
+# Public repo (separate git repo, not tracked here)
+public/
+
+# direnv
+.direnv
+
+# nix develop artifacts
+.envrc
+
+# macOS junk (if repo is shared cross-platform)
+.DS_Store
+
+# Editor artifacts
+*.swp
+*~
+*.kate-swp
+
