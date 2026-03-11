@@ -5,6 +5,33 @@ Flakes-based NixOS configuration for multiple machines. Currently managing:
 - **b650e-desktop** — AMD B650E desktop (primary, fully configured)
 - **framework** — Framework laptop (currently running Fedora + home-manager; NixOS migration planned)
 
+## Using This Config as a Starting Point
+
+All personal identifiers have been replaced with placeholders. Before running
+`nixos-rebuild switch`, replace them with your own details using the commands
+below — or do a find-and-replace in your editor.
+
+```bash
+# Replace the placeholder username with your actual Linux username
+# (must match the user you'll be logging in as)
+grep -rl 'yourusername' /etc/nixos | xargs sed -i 's/yourusername/YOUR_USERNAME/g'
+
+# Rename the home-manager entry point to match
+mv /etc/nixos/home/yourusername.nix /etc/nixos/home/YOUR_USERNAME.nix
+
+# Replace the placeholder email with your git email
+grep -rl 'your@email.com' /etc/nixos | xargs sed -i 's/your@email\.com/YOUR_EMAIL/g'
+
+# Replace the placeholder name with your git display name
+grep -rl 'Your Name' /etc/nixos | xargs sed -i 's/Your Name/YOUR_NAME/g'
+```
+
+Replace `YOUR_USERNAME`, `YOUR_EMAIL`, and `YOUR_NAME` with your actual values.
+The username must match your NixOS user account — it is used for the home
+directory path, home-manager user, trusted-users, and several service configs.
+
+---
+
 ## Structure
 
 ```
