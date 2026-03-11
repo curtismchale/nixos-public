@@ -1,5 +1,5 @@
 {
-  description = "NixOS + Home Manager (curtismchale)";
+  description = "NixOS + Home Manager (yourusername)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -18,7 +18,7 @@
   outputs = { self, nixpkgs, home-manager, zen-browser, ... }@inputs:
     let
       system = "x86_64-linux";
-      username = "curtismchale";
+      username = "yourusername";
 
       mkHost = { hostname, extraModules ? [ ] }:
         nixpkgs.lib.nixosSystem {

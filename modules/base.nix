@@ -55,7 +55,7 @@
 
   # Auto-optimise the store (hardlink identical files) on every build
   nix.settings.auto-optimise-store = true;
-  nix.settings.trusted-users = [ "root" "curtismchale" ];
+  nix.settings.trusted-users = [ "root" "yourusername" ];
 
   # Allow unprivileged processes to bind to ports 80+ (needed for devenv Caddy)
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
@@ -72,12 +72,12 @@
   programs._1password.enable = true;
   programs._1password-gui = {
     enable = true;
-    polkitPolicyOwners = [ "curtismchale" ];
+    polkitPolicyOwners = [ "yourusername" ];
   };
 
-  users.users.curtismchale = {
+  users.users.yourusername = {
     isNormalUser = true;
-    description = "curtismchale";
+    description = "yourusername";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" "_1password" ];
     shell = pkgs.zsh;
   };
@@ -113,9 +113,9 @@
 
   services.syncthing = {
     enable = true;
-    user = "curtismchale";
-    dataDir = "/home/curtismchale";
-    configDir = "/home/curtismchale/.config/syncthing";
+    user = "yourusername";
+    dataDir = "/home/yourusername";
+    configDir = "/home/yourusername/.config/syncthing";
     openDefaultPorts = true;
   };
 
@@ -130,14 +130,14 @@
   environment.systemPackages = [ pkgs.cifs-utils ];
 
   systemd.tmpfiles.rules = [
-    "d /home/curtismchale/Glacier 0755 curtismchale users -"
+    "d /home/yourusername/Glacier 0755 yourusername users -"
   ];
 
-  fileSystems."/home/curtismchale/Glacier" = {
+  fileSystems."/home/yourusername/Glacier" = {
     device = "//glacier.local/glacier-shared";
     fsType = "cifs";
     options = [
-      "credentials=/home/curtismchale/.smbcredentials"
+      "credentials=/home/yourusername/.smbcredentials"
       "uid=1000"
       "gid=100"
       "vers=3.1.1"

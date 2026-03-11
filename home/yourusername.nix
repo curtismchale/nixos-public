@@ -1,8 +1,8 @@
 { hostname, ... }:
 
 {
-  home.username = "curtismchale";
-  home.homeDirectory = "/home/curtismchale";
+  home.username = "yourusername";
+  home.homeDirectory = "/home/yourusername";
   home.stateVersion = "25.11";
 
   programs.home-manager.enable = true;

@@ -20,7 +20,7 @@
 
   # Backlight control — user must be in video group for brightnessctl
   # to work without sudo (used in Hyprland XF86MonBrightness keybinds)
-  users.users.curtismchale.extraGroups = [ "video" ];
+  users.users.yourusername.extraGroups = [ "video" ];
 
   # Battery and power management
   services.power-profiles-daemon.enable = true;

@@ -9,8 +9,8 @@ Running context for Claude Code sessions on this repo.
 - Always markdown format
 - Technical posts assume a reasonably technical audience — comfortable with the terminal, familiar with home-manager if the topic is NixOS
 - Skip beginner-level explanations unless explicitly told the post is for beginners
-- **Ready folder**: `/home/curtismchale/Documents/main/Writing/010 - Ready`
-- **Working folder**: `/home/curtismchale/Documents/main/Writing/020 - Working`
+- **Ready folder**: `/home/yourusername/Documents/main/Writing/010 - Ready`
+- **Working folder**: `/home/yourusername/Documents/main/Writing/020 - Working`
 
 ---
 
@@ -19,7 +19,7 @@ Running context for Claude Code sessions on this repo.
 - **Host**: `b650e-desktop` (AMD B650E desktop)
 - **OS**: NixOS with flakes
 - **WM**: Hyprland (Wayland)
-- **User**: curtismchale
+- **User**: yourusername
 - **Shell**: zsh
 - **Rebuild command**: `nrs` (alias for `sudo nixos-rebuild switch --flake /etc/nixos#$(hostname)`)
 
@@ -49,7 +49,7 @@ AI features are blocked via `programs.firefox.profiles.default.settings` in `com
 
 ## Nix Trusted Users (2026-02-23)
 
-`nix.settings.trusted-users = [ "root" "curtismchale" ]` is set in `modules/base.nix`.
+`nix.settings.trusted-users = [ "root" "yourusername" ]` is set in `modules/base.nix`.
 Required for devenv/cachix to automatically configure binary caches. This is a **NixOS
 system-level** option — it does nothing in home-manager files.
 
@@ -95,7 +95,7 @@ Net effect: always at least 20 rollback generations; unreferenced store paths cl
   hosts/b650e-desktop/    # Desktop host system config
   modules/                # Shared NixOS modules (hyprland.nix, desktop.nix, etc.)
   home/
-    curtismchale.nix      # Home-manager entrypoint; imports profile by hostname
+    yourusername.nix      # Home-manager entrypoint; imports profile by hostname
     profiles/
       common.nix          # Packages + programs shared across all machines
       desktop.nix         # Desktop-specific home-manager config (Hyprland settings)
@@ -252,7 +252,7 @@ The error is: `GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such int
 
 **Why**: NixOS sets `NIX_XDG_DESKTOP_PORTAL_DIR` which tells `xdg-desktop-portal` where to
 find `.portal` definition files. Home-manager's `wayland.windowManager.hyprland.enable = true`
-puts `hyprland.portal` in the **per-user** profile (`/etc/profiles/per-user/curtismchale/share/
+puts `hyprland.portal` in the **per-user** profile (`/etc/profiles/per-user/yourusername/share/
 xdg-desktop-portal/portals/`), and this overrides the system path. But `xdg-desktop-portal-gtk`
 (from `xdg.portal.extraPortals` in the NixOS system config) only goes to the **system** profile
 (`/run/current-system/sw/share/xdg-desktop-portal/portals/`). Result: the per-user portal dir
@@ -561,14 +561,14 @@ NixOS `fileSystems` with `x-systemd.automount`. It mounts on first access and un
 after 5 minutes idle. The machine will boot normally even if Glacier is offline (`nofail`).
 
 - **Device**: `//glacier.local/glacier-shared`
-- **Mount point**: `/home/curtismchale/Glacier` (i.e. `~/Glacier`)
+- **Mount point**: `/home/yourusername/Glacier` (i.e. `~/Glacier`)
 - **Tools**: `cifs-utils` is installed system-wide
 - **mDNS**: `services.avahi` (with `nssmdns4 = true`) is enabled in `base.nix` — required
   for `.local` hostname resolution. Without it, mount fails with "could not resolve address".
 
 > **Debugging note**: The share name `glacier-shared` was discovered (not guessed) using:
 > ```bash
-> nix-shell -p samba --run "smbclient -L glacier.local -U curtismchale%PASSWORD"
+> nix-shell -p samba --run "smbclient -L glacier.local -U yourusername%PASSWORD"
 > ```
 > The NAS exposes: `glacier-shared`, `homes`, `PlexMediaServer`, `home`.
 
@@ -597,7 +597,7 @@ After `nrs`, the mount activates automatically the first time you `ls ~/Glacier`
 navigate there in Dolphin. To trigger it manually:
 
 ```bash
-systemctl start home-curtismchale-Glacier.mount
+systemctl start home-yourusername-Glacier.mount
 ```
 
 ---
@@ -727,7 +727,7 @@ To launch: `rmpc-kitty`
 ## Syncthing
 
 Configured as a NixOS system service in `modules/base.nix` (all machines).
-Starts at boot before login, runs as `curtismchale`.
+Starts at boot before login, runs as `yourusername`.
 
 - Data dir: `~`, config dir: `~/.config/syncthing`
 - Ports 22000 and 21027 opened in firewall via `openDefaultPorts = true`

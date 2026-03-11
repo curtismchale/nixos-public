@@ -84,7 +84,7 @@ password still required to unlock after idle.
 
 **Enroll fingerprint** (one-time per machine, must use sudo due to no polkit agent in Hyprland session):
 ```bash
-sudo fprintd-enroll curtismchale
+sudo fprintd-enroll yourusername
 ```
 
 **Files changed**: `modules/laptop.nix`
@@ -199,18 +199,18 @@ properly in the background. Removed the line from `desktop.nix`.
 
 ## 2026-02-23
 
-### Fix: Add curtismchale to Nix trusted-users for devenv/cachix
+### Fix: Add yourusername to Nix trusted-users for devenv/cachix
 
 **Problem**: `devenv` with `cachix.enable = true` failed with "you are not a trusted user
 of the Nix store" when entering a project directory via direnv.
 
-**Root cause**: `nix.settings.trusted-users` was added to `home/curtismchale.nix` (a
+**Root cause**: `nix.settings.trusted-users` was added to `home/yourusername.nix` (a
 home-manager file). This is a NixOS system-level option — home-manager silently ignores it.
 
-**Fix**: Moved `nix.settings.trusted-users = [ "root" "curtismchale" ]` to
+**Fix**: Moved `nix.settings.trusted-users = [ "root" "yourusername" ]` to
 `modules/base.nix` alongside the other `nix.settings` options.
 
-**Files changed**: `modules/base.nix`, `home/curtismchale.nix`
+**Files changed**: `modules/base.nix`, `home/yourusername.nix`
 
 ### Add libvirtd and virt-manager for VMs
 
@@ -787,7 +787,7 @@ via the `zen-browser` flake input, not flatpak. Keybind did nothing.
 `No such interface "org.freedesktop.portal.Screenshot"`.
 
 **Root cause**: Home-manager's `wayland.windowManager.hyprland.enable = true` puts
-`hyprland.portal` in the per-user profile (`/etc/profiles/per-user/curtismchale/share/
+`hyprland.portal` in the per-user profile (`/etc/profiles/per-user/yourusername/share/
 xdg-desktop-portal/portals/`), which overrides the system path. But
 `xdg-desktop-portal-gtk` (from `xdg.portal.extraPortals` in `modules/hyprland.nix`)
 only installed `gtk.portal` to the system profile. The per-user dir only had
@@ -882,7 +882,7 @@ binds are tuned for the Moonlander (Dvorak Alt+HTCN navigation).
 
 **Gotcha**: New files in a flake repo must be `git add`ed before `nrs` or the build fails
 with "path does not exist". Also, previous `sudo` operations had left root-owned objects
-in `.git/objects/e6/` — fixed with `sudo chown -R curtismchale:users /etc/nixos/.git`.
+in `.git/objects/e6/` — fixed with `sudo chown -R yourusername:users /etc/nixos/.git`.
 
 ---
 
@@ -1052,7 +1052,7 @@ set `terminal = "${pkgs.kitty}/bin/kitty"`. Removed `rofi` from `home.packages`.
 
 - Added `services.syncthing` as a NixOS system service (not home-manager) so it starts
   before login
-- Runs as user `curtismchale`, data at `~/`, config at `~/.config/syncthing`
+- Runs as user `yourusername`, data at `~/`, config at `~/.config/syncthing`
 - `openDefaultPorts = true` opens ports 22000 (sync) and 21027 (local discovery) in
   the NixOS firewall automatically
 
@@ -1078,7 +1078,7 @@ set `terminal = "${pkgs.kitty}/bin/kitty"`. Removed `rofi` from `home.packages`.
   fixed by `nerd-fonts.symbols-only` + `fc-cache -f`
 - Doom dependencies already satisfied by `common.nix`: `ripgrep`, `fd`, `gcc`, `nodejs`
 - feedsmith local package recipe:
-  `(package! feedsmith :recipe (:host github :repo "curtismchale/feedsmith" :local-repo "~/Projects/feedsmith"))`
+  `(package! feedsmith :recipe (:host github :repo "yourusername/feedsmith" :local-repo "~/Projects/feedsmith"))`
 
 ---
 

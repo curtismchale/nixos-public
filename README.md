@@ -19,7 +19,7 @@ Flakes-based NixOS configuration for multiple machines. Currently managing:
 │       ├── configuration.nix        # Host-specific: hostname, boot, LUKS, state version
 │       └── hardware-configuration.nix  # Auto-generated, do not hand-edit
 └── home/
-    ├── curtismchale.nix             # Home Manager entry point (selects profiles per host)
+    ├── yourusername.nix             # Home Manager entry point (selects profiles per host)
     └── profiles/
         ├── common.nix               # User packages and config shared across all machines
         ├── desktop.nix              # Desktop-specific user config (currently empty)
@@ -36,7 +36,7 @@ Flakes-based NixOS configuration for multiple machines. Currently managing:
 | User shared | `home/profiles/common.nix` | Packages, shell, git, dev tools |
 | User per-type | `home/profiles/desktop.nix`, `home/profiles/laptop.nix` | Machine-type user config |
 
-`home/curtismchale.nix` selects which profiles to load based on hostname.
+`home/yourusername.nix` selects which profiles to load based on hostname.
 
 ## Common Commands
 
@@ -83,7 +83,7 @@ These aliases are defined in `home/profiles/common.nix`.
    };
    ```
 
-5. **Update `home/curtismchale.nix`** to import the correct profile for the new hostname.
+5. **Update `home/yourusername.nix`** to import the correct profile for the new hostname.
 
 6. **Deploy** on the new machine:
    ```bash
@@ -111,7 +111,7 @@ Home Manager is integrated into the NixOS build; `home-manager switch` is not ne
 ## Key Details
 
 - **Nixpkgs channel**: `nixpkgs-unstable`
-- **User**: `curtismchale` (wheel, networkmanager groups; zsh shell)
+- **User**: `yourusername` (wheel, networkmanager groups; zsh shell)
 - **Disk encryption**: LUKS on all hosts (UUID varies per machine)
 - **Kernel**: `linuxPackages_6_19` on desktop (pinned — see Kernel section below)
 - **Unfree packages**: Explicit allowlist in `flake.nix` (`allowUnfreePredicate`); currently allows `claude-code`, `protonmail-bridge`, `protonmail-desktop`, `protonvpn-gui`
@@ -140,7 +140,7 @@ in nixpkgs — it must be installed manually once per machine.
 3. Bring in your personal Doom config (your `~/.config/doom` repo):
    ```bash
    mv ~/.config/doom ~/.config/doom.bak
-   git clone git@github.com:curtismchale/doom.git ~/.config/doom
+   git clone git@github.com:yourusername/doom.git ~/.config/doom
    doom sync
    ```
 
@@ -171,14 +171,14 @@ by Nix since the Nix store is world-readable.
 3. Verify the permissions are correct:
    ```bash
    ls -la ~/.smbcredentials
-   # should show: -rw------- 1 curtismchale ...
+   # should show: -rw------- 1 yourusername ...
    ```
 
 After `nrs`, navigate to `~/Glacier` in any terminal or in Dolphin and the share will mount
 automatically. If it fails, check the mount log:
 
 ```bash
-journalctl -u home-curtismchale-Glacier.mount -n 20
+journalctl -u home-yourusername-Glacier.mount -n 20
 ```
 
 ### Protonmail

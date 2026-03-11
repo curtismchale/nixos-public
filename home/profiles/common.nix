@@ -345,8 +345,8 @@ programs.git = {
   settings = {
     gpg.format = "ssh";
     user = {
-      name = "Curtis McHale";
-      email = "curtis@curtismchale.ca";
+      name = "Your Name";
+      email = "your@email.com";
     };
     init.defaultBranch = "main";
   };

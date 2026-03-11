@@ -22,7 +22,6 @@
 
   # custom hosts for your sites
   # The format below goes inside the network hosts block 
-  # "127.0.01" = ["domain.one", "domain.two"]; 
   networking.hosts = {
     };
 
