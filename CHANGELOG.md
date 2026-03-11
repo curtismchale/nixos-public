@@ -2,6 +2,41 @@
 
 ## 2026-03-11
 
+### Add: Public repo deploy script
+
+Added `scripts/deploy-public.sh` — strips sensitive data from the private config
+and pushes a sanitized copy to `git@github.com:yourusername/nixos-public.git`.
+
+**What it does on each run:**
+1. `rsync` private → `/etc/nixos/public/`, excluding `.git`, `.claude/`, `CLAUDE.md`,
+   `scripts/`, `public/`, `result`, `.direnv`, `.envrc`
+2. Renames `home/yourusername.nix` → `home/yourusername.nix`
+3. Replaces personal identifiers with placeholders (email first, then full name,
+   then username — order prevents partial matches)
+4. Strips all lines containing any IPv4 address
+6. Verifies nothing sensitive remains — aborts if found
+7. `nix flake show` + `nix eval` for both hosts to confirm config still evaluates
+8. Commits and pushes to public repo
+
+**Personalization placeholders in public repo:**
+- `yourusername` → `yourusername` (username, home paths, users.users, trusted-users, etc.)
+- `your@email.com` → `your@email.com`
+- `Your Name` → `Your Name`
+- `home/yourusername.nix` → `home/yourusername.nix` (file renamed)
+
+**Public repo setup instructions** added to top of `README.md` with grep/sed/mv
+commands for anyone adopting the config to replace placeholders with their own values.
+
+**`/etc/nixos/public/`** initialized as a separate git repo pointing at the public
+remote. Added to `.gitignore` so it is not tracked by the private repo.
+
+`deploy-public` shell alias added to `home/profiles/common.nix`.
+
+**Files changed**: `scripts/deploy-public.sh` (new), `home/profiles/common.nix`,
+`.gitignore`, `README.md`
+
+---
+
 ### Add: Zellij tab move keybindings
 
 Added `MoveTab` keybindings to the `tab` mode in `home/assets/zellij/config.kdl`.
