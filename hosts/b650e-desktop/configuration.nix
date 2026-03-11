@@ -20,7 +20,9 @@
   # to 6.20.0 on flake update. See README "Kernel" section for details.
   boot.kernelPackages = pkgs.linuxPackages_6_19;
 
-  # custom hosts for solano
+  # custom hosts for your sites
+  # The format below goes inside the network hosts block 
+  # "127.0.01" = ["domain.one", "domain.two"]; 
   networking.hosts = {
     };
 
